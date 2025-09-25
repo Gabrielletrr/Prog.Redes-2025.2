@@ -1,6 +1,6 @@
 import sys
 
-import funcoes
+import Funçoes
 
 try:
    intValor = int(input('\nDigite um número inteiro: '))
@@ -14,7 +14,7 @@ else:
    if intValor < 0:
       sys.exit('\nERRO: Por favor, insira um número inteiro não negativo...\n')
 
-   binValor = funcoes.dec2bin(intValor)
+   binValor = Funçoes.dec2bin(intValor)
 
    # Exibir a saída
    print(f'\n{intValor} em Binário....: {binValor}\n')
