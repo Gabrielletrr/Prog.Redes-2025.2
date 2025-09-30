@@ -35,3 +35,19 @@ print(f'Endereço IPv4 da Rede em binário é (32 bits): {intIPRede:032b}\n')
 # A função 'to_bytes(4)' converte o inteiro de volta para uma sequência de 4 bytes.
 strIPRede = '.'.join([str(x) for x in intIPRede.to_bytes(4)])
 print(f'O Endereço IPv4 da Rede é...................: {strIPRede}\n')
+
+# Primeiro IP válido da rede
+# or lógico com o IP da rede com ultimo IP do último octeto ligado
+intIPvalido = intIPRede | 0x00000001
+
+print(f'Endereço IPv4 da Rede em binário é (32 bits): {intIPvalido:032b}\n')  
+
+strIPvalido = '.'.join([str(x) for x in intIPvalido.to_bytes(4)])
+print(f'O Primeiro IP válido da Rede é...................: {strIPvalido }\n')
+
+intBroadcast = intIPRede | (~intMascara & 0xFFFFFFFF)
+
+print(f'Endereço IPv4 da Rede em binário é (32 bits): {intBroadcast:032b}\n')  
+
+strultimoIPvalido = '.'.join([str(x) for x in intBroadcast.to_bytes(4)])
+print(f'O Primeiro IP válido da Rede é...................: {strultimoIPvalido }\n')
