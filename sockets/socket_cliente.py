@@ -26,5 +26,9 @@ while True:
    # Enviando a mensagem ao servidor      
    sockUDP.sendto(bytesMensagem, (HOST_IP_SERVER, HOST_PORT))
 
+   resposta, endServer = sockUDP.recvfrom(1024)
+
+   print('Resposta:', resposta.decode(CODE_PAGE))
+
 # Fechando o socket
 sockUDP.close()

@@ -3,6 +3,7 @@ import socket
 
 # ----------------------------------------------------------------------
 HOST_IP_SERVER  = ''              # Definindo o IP do servidor
+HOST_IP_CLIENTE = '192.168.0.133'
 HOST_PORT       = 50000           # Definindo a porta
 CODE_PAGE       = 'utf-8'         # Definindo a página de 
                                   # codificação de caracteres
@@ -27,6 +28,7 @@ try:
         try:
             # Recebendo os dados do cliente
             byteMensagem, tuplaCliente = sockServer.recvfrom(BUFFER_SIZE)
+
         except socket.timeout:
             continue
         else:
@@ -35,6 +37,10 @@ try:
             strNomeHost = strNomeHost.split('.')[0].upper()
             # Imprimindo a mensagem recebida convertendo de bytes para string
             print(f'{tuplaCliente} -> {strNomeHost}: {byteMensagem.decode(CODE_PAGE)}')
+
+            resposta = byteMensagem
+
+            sockServer.sendto(resposta, tuplaCliente)
 
 except KeyboardInterrupt:
     print('\n\nAVISO: Interrupção detectada (CTRL + C). Encerrando servidor...')
