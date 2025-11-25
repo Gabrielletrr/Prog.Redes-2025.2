@@ -64,3 +64,8 @@ print(f'O IP da Máscara para o CIDR /{intCIDR:<2} é...........: {strIPMascara:
 
 # ----------------------------------------------------------------------
 # Exibindo os resultados
+print(f'O Endereço da Rede é (IPv4).................: {strIPRede:>15} -> {intIPRede:032b}')
+print(f'O Endereço do 1º Host da Rede é (IPV4)......: {strIPPrimeiroHost:>15} -> {intIPPrimeiroHost:032b}')
+print(f'O Endereço do Broadcast da Rede é (IPV4)....: {strIPBroadcast:>15} -> {intIPBroadcast:032b}')
+print(f'O Endereço do Último Host da Rede é (IPV4)..: {strIPUltimoHost:>15} -> {intIPUltimoHost:032b}')
+print(f'A Quantidade de Hosts Válidos na Rede é.....: {intQtHosts:>15}\n')
