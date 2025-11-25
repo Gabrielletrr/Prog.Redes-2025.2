@@ -31,16 +31,16 @@ try:
 
         except socket.timeout:
             continue
+
         else:
-            # Obtendo o nome (HOST) do Cliente
-            strNomeHost = socket.gethostbyaddr(tuplaCliente[0])[0]
-            strNomeHost = strNomeHost.split('.')[0].upper()
+            
             # Imprimindo a mensagem recebida convertendo de bytes para string
-            print(f'{tuplaCliente} -> {strNomeHost}: {byteMensagem.decode(CODE_PAGE)}')
+            print(f'{tuplaCliente} -> {byteMensagem.decode(CODE_PAGE)}')
+            print('Mensagem recebida com sucesso!')
 
             resposta = byteMensagem
-
             sockServer.sendto(resposta, tuplaCliente)
+            print('Mensagem reenviada com sucesso!')
 
 except KeyboardInterrupt:
     print('\n\nAVISO: Interrupção detectada (CTRL + C). Encerrando servidor...')
