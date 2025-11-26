@@ -3,7 +3,6 @@ import socket
 
 # ----------------------------------------------------------------------
 HOST_IP_SERVER  = ''              # Definindo o IP do servidor
-HOST_IP_CLIENTE = '192.168.0.133'
 HOST_PORT       = 50000           # Definindo a porta
 CODE_PAGE       = 'utf-8'         # Definindo a página de 
                                   # codificação de caracteres
@@ -37,12 +36,10 @@ try:
             # Imprimindo a mensagem recebida convertendo de bytes para string
             print(f'{tuplaCliente} -> {byteMensagem.decode(CODE_PAGE)}')
             print('Mensagem recebida com sucesso!')
-            try:
-             resposta = byteMensagem
-             sockServer.sendto(resposta, tuplaCliente)
-             print('Mensagem reenviada com sucesso!')
-            except socket.error:
-                print('Mensagem não enviada')
+
+            resposta = byteMensagem
+            sockServer.sendto(resposta, tuplaCliente)
+            print('Mensagem reenviada com sucesso!')
 
 except KeyboardInterrupt:
     print('\n\nAVISO: Interrupção detectada (CTRL + C). Encerrando servidor...')
@@ -51,3 +48,5 @@ finally:
     # Fechando o socket
     sockServer.close()
     print('Servidor finalizado com sucesso.')
+    
+    #sem alterrar o buffer comi fazer para receber uma mesg maior que ele 
