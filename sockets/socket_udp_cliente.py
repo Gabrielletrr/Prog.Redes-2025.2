@@ -6,6 +6,7 @@ HOST_IP_SERVER = '192.168.0.5' # Definindo o IP do servidor
 HOST_PORT      = 50000                    # Definindo a porta
 CODE_PAGE      = 'utf-8'                  # Definindo a página de 
                                           # codificação de caracteres
+BUFFER_SIZE     = 512             # Tamanho do buffer
 # ----------------------------------------------------------------------
 
 # Criando o socket (socket.AF_INET -> IPV4 / socket.SOCK_DGRAM -> UDP)
@@ -27,7 +28,7 @@ while True:
    sockUDP.sendto(bytesMensagem, (HOST_IP_SERVER, HOST_PORT))
 
    # Recebendo a resposta do servidor
-   resposta, endServer = sockUDP.recvfrom(1024)
+   resposta = sockUDP.recvfrom(BUFFER_SIZE)
 
    print('Resposta enviada pelo servidor: ', resposta.decode(CODE_PAGE))
    print('Resposta recebida com sucesso!')

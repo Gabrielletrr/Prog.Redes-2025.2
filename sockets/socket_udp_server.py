@@ -37,10 +37,12 @@ try:
             # Imprimindo a mensagem recebida convertendo de bytes para string
             print(f'{tuplaCliente} -> {byteMensagem.decode(CODE_PAGE)}')
             print('Mensagem recebida com sucesso!')
-
-            resposta = byteMensagem
-            sockServer.sendto(resposta, tuplaCliente)
-            print('Mensagem reenviada com sucesso!')
+            try:
+             resposta = byteMensagem
+             sockServer.sendto(resposta, tuplaCliente)
+             print('Mensagem reenviada com sucesso!')
+            except socket.error:
+                print('Mensagem não enviada')
 
 except KeyboardInterrupt:
     print('\n\nAVISO: Interrupção detectada (CTRL + C). Encerrando servidor...')
