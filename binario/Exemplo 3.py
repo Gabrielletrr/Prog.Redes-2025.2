@@ -2,7 +2,6 @@ import sys
 
 import funcoes
 
-
 try:
    intValor = int(input('\nDigite um número inteiro: '))
 except ValueError:
