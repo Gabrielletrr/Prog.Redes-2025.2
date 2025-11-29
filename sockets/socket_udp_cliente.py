@@ -4,8 +4,6 @@ import socket
 HOST_IP_SERVER = '10.25.1.9' # Definindo o IP do servidor
 HOST_PORT      = 50000       # Definindo a porta
 TUPLA_SERVER   = (HOST_IP_SERVER, HOST_PORT)
-
-
 BUFFER_SIZE    = 10          # Tamanho do buffer
 CODE_PAGE      = 'utf-8'     # Definindo a página de codificação de caracteres
 
