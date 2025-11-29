@@ -2,10 +2,8 @@ import socket
 
 HOST_IP_SERVER  = ''              # Definindo o IP do servidor
 HOST_PORT       = 50000           # Definindo a porta
-CODE_PAGE       = 'utf-8'         # Definindo a página de 
-                                  # codificação de caracteres
+CODE_PAGE       = 'utf-8'         # Definindo a página de codificação de caracteres
 BUFFER_SIZE     = 512             # Tamanho do buffer
-# ----------------------------------------------------------------------
 
 # Criando o socket (socket.AF_INET -> IPV4 / socket.SOCK_DGRAM -> UDP)
 sockServer = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
