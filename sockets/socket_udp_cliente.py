@@ -2,14 +2,10 @@
 import socket
 
 # ----------------------------------------------------------------------
-HOST_IP_SERVER = '10.25.1.9' # Definindo o IP do servidor
-HOST_PORT      = 50000       # Definindo a porta
-TUPLA_SERVER   = (HOST_IP_SERVER, HOST_PORT)
-
-
-BUFFER_SIZE    = 10          # Tamanho do buffer
-CODE_PAGE      = 'utf-8'     # Definindo a página de 
-                             # codificação de caracteres
+HOST_IP_SERVER = '192.168.0.5' # Definindo o IP do servidor
+HOST_PORT      = 50000                    # Definindo a porta
+CODE_PAGE      = 'utf-8'                  # Definindo a página de 
+                                          # codificação de caracteres
 # ----------------------------------------------------------------------
 
 # Criando o socket (socket.AF_INET -> IPV4 / socket.SOCK_DGRAM -> UDP)
@@ -41,4 +37,4 @@ while True:
    print(f'{tuplaOrigem} -> {strNomeHost}: {bytesMensagemRetorno.decode(CODE_PAGE)}')
 
 # Fechando o socket
-sockClient.close()
+sockUDP.close()
