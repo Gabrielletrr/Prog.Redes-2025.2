@@ -3,15 +3,19 @@ import socket
 
 # ----------------------------------------------------------------------
 HOST_IP_SERVER = '192.168.0.5' # Definindo o IP do servidor
-HOST_PORT      = 50000                    # Definindo a porta
-CODE_PAGE      = 'utf-8'                  # Definindo a página de 
-                                          # codificação de caracteres
+HOST_PORT      = 50000       # Definindo a porta
+TUPLA_SERVER   = (HOST_IP_SERVER, HOST_PORT)
+
+
+BUFFER_SIZE    = 510          # Tamanho do buffer
+CODE_PAGE      = 'utf-8'     # Definindo a página de 
+                             # codificação de caracteres
 # ----------------------------------------------------------------------
 
 # Criando o socket (socket.AF_INET -> IPV4 / socket.SOCK_DGRAM -> UDP)
-sockUDP = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+sockClient = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
-print('\n\nPara sair digite SAIR...\n\n')
+print('\n\nPara sair digite SAIR...\n\n')  
 
 while True:
    # Informando a mensagem a ser enviada para o servidor
@@ -20,11 +24,26 @@ while True:
    # Saindo do Cliente quando digitar SAIR
    if strMensagem.lower().strip() == 'sair': break
 
-   # Convertendo a mensagem em bytes
-   bytesMensagem = strMensagem.encode(CODE_PAGE) 
+   # Enviando o tamanho da mensagem ao servidor
+   bytesTamanhoMensagem = str(len(strMensagem)).encode(CODE_PAGE)
+   sockClient.sendto(bytesTamanhoMensagem, TUPLA_SERVER)
 
+   confirmacao = sockClient.recv(BUFFER_SIZE)
+   print(confirmacao.decode(CODE_PAGE))
+   
    # Enviando a mensagem ao servidor      
-   sockUDP.sendto(bytesMensagem, (HOST_IP_SERVER, HOST_PORT))
+   sockClient.sendto(strMensagem.encode(CODE_PAGE), TUPLA_SERVER)
+
+   # Recebendo resposta do servidor
+   bytesMensagemRetorno, tuplaCliente = sockClient.recvfrom(BUFFER_SIZE)
+   intTamanhoMensagem = int(bytesMensagemRetorno.decode(CODE_PAGE))
+   if intTamanhoMensagem > BUFFER_SIZE: BUFFER_SIZE = intTamanhoMensagem
+   bytesMensagemRetorno, tuplaOrigem = sockClient.recvfrom(BUFFER_SIZE)
+   try:
+     strNomeHost = socket.gethostbyaddr(tuplaOrigem[0])[0].split('.')[0].upper()
+   except socket.herror:
+     strNomeHost = HOST_IP_SERVER
+   print(f'{tuplaOrigem} -> {strNomeHost}: {bytesMensagemRetorno.decode(CODE_PAGE)}')
 
 # Fechando o socket
-sockUDP.close()
+sockClient.close()
