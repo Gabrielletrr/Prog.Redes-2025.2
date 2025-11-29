@@ -30,8 +30,8 @@ while True:
    bytesMensagemRetorno, tuplaCliente = sockClient.recvfrom(BUFFER_SIZE)
    intTamanhoMensagem = int(bytesMensagemRetorno.decode(CODE_PAGE))
    if intTamanhoMensagem > BUFFER_SIZE: BUFFER_SIZE = intTamanhoMensagem
-
    bytesMensagemRetorno, tuplaOrigem = sockClient.recvfrom(BUFFER_SIZE)
+   
    try:
       strNomeHost = socket.gethostbyaddr(tuplaOrigem[0])[0].split('.')[0].upper()
    except socket.herror:
