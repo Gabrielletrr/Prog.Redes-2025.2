@@ -29,8 +29,11 @@ try:
       except socket.timeout:
          continue
       else:
-         # Obtendo o nome (HOST) do cliente
-         strNomeHost = socket.gethostbyaddr(tuplaCliente[0])[0].split('.')[0].upper()
+         try:
+            # Obtendo o nome (HOST) do cliente
+            strNomeHost = socket.gethostbyaddr(tuplaCliente[0])[0].split('.')[0].upper()
+         except socket.herror:
+            strNomeHost = tuplaCliente[0]
 
          # Imprimindo a mensagem recebida convertendo de bytes para string
          strMensagem = byteMensagem.decode(CODE_PAGE)

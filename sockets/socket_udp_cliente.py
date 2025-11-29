@@ -32,8 +32,11 @@ while True:
    if intTamanhoMensagem > BUFFER_SIZE: BUFFER_SIZE = intTamanhoMensagem
 
    bytesMensagemRetorno, tuplaOrigem = sockClient.recvfrom(BUFFER_SIZE)
-   strNomeHost = socket.gethostbyaddr(tuplaOrigem[0])[0].split('.')[0].upper()
-   print(f'{tuplaOrigem} -> {strNomeHost}: {bytesMensagemRetorno.decode(CODE_PAGE)}')
+   try:
+      strNomeHost = socket.gethostbyaddr(tuplaOrigem[0])[0].split('.')[0].upper()
+   except socket.herror:
+      strNomeHost = HOST_IP_SERVER
+      print(f'{tuplaOrigem} -> {strNomeHost}: {bytesMensagemRetorno.decode(CODE_PAGE)}')
 
 # Fechando o socket
 sockClient.close()
