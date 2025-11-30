@@ -2,7 +2,7 @@ import socket
 
 HOST_IP_SERVER  = ''              # Definindo o IP do servidor
 HOST_PORT       = 50000           # Definindo a porta
-BUFFER_SIZE     = 2               # Tamanho do buffer
+BUFFER_SIZE     = 10               # Tamanho do buffer
 CODE_PAGE       = 'utf-8'         # Definindo a página de codificação de caracteres
 
 # Criando o socket (socket.AF_INET -> IPV4 / socket.SOCK_DGRAM -> UDP)
@@ -51,10 +51,13 @@ try:
 
          print(f'{tuplaCliente} -> {strNomeHost}: {Mensagem}')
 
-         # Enviando a mensagem de volta para o servidor
-         for i in range(0,len(Mensagem), BUFFER_SIZE):
+         
+         # Enviando a mensagem de volta para o cliente
+         i = 0
+         while i < intTamanhoMensagens:
             parte = Mensagem[i:i+BUFFER_SIZE]
             sockServer.sendto(str(parte).encode(CODE_PAGE), tuplaCliente)
+            i += BUFFER_SIZE
       
 except KeyboardInterrupt:
     print('\nAVISO: Foi Pressionado CTRL+C...\nSaindo do Servidor...\n')
