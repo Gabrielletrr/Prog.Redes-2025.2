@@ -1,11 +1,10 @@
 # Importando a biblioteca SOCKET
 import socket
 
-# ----------------------------------------------------------------------
 HOST_IP_SERVER = '192.168.0.5' # Definindo o IP do servidor
 HOST_PORT      = 50000       # Definindo a porta
 CODE_PAGE      = 'utf-8'     # Definindo a página de codificação de caracteres
-BUFFER_SIZE    = 2       # Tamanho do buffer
+BUFFER_SIZE    = 10       # Tamanho do buffer
 TUPLA_SERVIDOR = HOST_IP_SERVER, HOST_PORT
 
 # Criando o socket (socket.AF_INET -> IPV4 / socket.SOCK_DGRAM -> UDP)
@@ -26,10 +25,12 @@ while True:
    sockClient.sendto(str(TamanhoMensagem).encode(CODE_PAGE), TUPLA_SERVIDOR)
    print('Tamanho da mensagem', TamanhoMensagem)
 
+   i = 0
    # Enviando a mensagem fragmentada
-   for i in range(0, len(strMensagem), BUFFER_SIZE):
-      fragmento = strMensagem[i:i+BUFFER_SIZE]
-      sockClient.sendto((str(fragmento).encode(CODE_PAGE)), TUPLA_SERVIDOR)
+   while i < TamanhoMensagem:
+     fragmento = strMensagem[i:i+BUFFER_SIZE]
+     sockClient.sendto((str(fragmento).encode(CODE_PAGE)), TUPLA_SERVIDOR)
+     i += BUFFER_SIZE  
 
    Resposta = ''
    Partes = 0
