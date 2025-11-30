@@ -26,4 +26,4 @@ else:
       binValor = ('0' * intZeros) + binValor
 
    # Exibir a saída
-   print(f'\n{intValor} em Binário....: 0b{binValor}\n')
+   print(f'\n{intValor} em Binário....:{binValor}\n')

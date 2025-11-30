@@ -1,6 +1,6 @@
 import sys
 
-import Funçoes
+import funcoes
 
 try:
    strIP = input('\nDigite um endereço IP (Formato IPv4): ')
@@ -24,7 +24,7 @@ else:
    print(lstOctetos)  
 
    # Convertendo cada octeto para binário
-   lstBinarios_1 = [Funçoes.dec2bin(int(octeto)) for octeto in lstOctetos]
+   lstBinarios_1 = [funcoes.dec2bin(int(octeto)) for octeto in lstOctetos]
    lstBinarios_2 = [bin(int(octeto)) for octeto in lstOctetos]
 
    print(lstBinarios_1)
