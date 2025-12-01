@@ -1,5 +1,4 @@
 import socket
-import time   # ← ADICIONADO AQUI
 
 HOST_IP_SERVER = '192.168.0.5'
 HOST_PORT      = 50000
@@ -43,8 +42,6 @@ while True:
         parte, TUPLA_SERVIDOR = sockClient.recvfrom(BUFFER_SIZE)
         conteudo_arquivo += parte
         recebido += len(parte)
-
-        time.sleep(0.001)   # ← ESSENCIAL PARA NÃO PERDER PACOTES
 
     print("Download concluído!")
 
