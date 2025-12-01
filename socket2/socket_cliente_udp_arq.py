@@ -13,7 +13,8 @@ print("\n\nPara sair digite SAIR...\n\n")
 while True:
     NomeArquivo = input("Digite o nome do arquivo: ")
 
-    if NomeArquivo.lower().strip() == "sair":break
+    if NomeArquivo.lower().strip() == "sair":
+        break
 
     # Envia o nome do arquivo
     sockClient.sendto(NomeArquivo.encode(CODE_PAGE), TUPLA_SERVIDOR)
