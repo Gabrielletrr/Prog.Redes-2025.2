@@ -1,4 +1,5 @@
 import socket
+import time   # ← ADICIONADO AQUI
 
 HOST_IP_SERVER = '192.168.0.5'
 HOST_PORT      = 50000
@@ -13,7 +14,8 @@ print("\n\nPara sair digite SAIR...\n\n")
 while True:
     NomeArquivo = input("Digite o nome do arquivo: ")
 
-    if NomeArquivo.lower().strip() == "sair":break
+    if NomeArquivo.lower().strip() == "sair":
+        break
 
     # Envia o nome do arquivo
     sockClient.sendto(NomeArquivo.encode(CODE_PAGE), TUPLA_SERVIDOR)
@@ -41,6 +43,8 @@ while True:
         parte, TUPLA_SERVIDOR = sockClient.recvfrom(BUFFER_SIZE)
         conteudo_arquivo += parte
         recebido += len(parte)
+
+        time.sleep(0.001)   # ← ESSENCIAL PARA NÃO PERDER PACOTES
 
     print("Download concluído!")
 
