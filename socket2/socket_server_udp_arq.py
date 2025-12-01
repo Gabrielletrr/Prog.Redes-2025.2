@@ -1,4 +1,5 @@
 import socket
+from os import path
 
 HOST_IP_SERVER  = ''              # Definindo o IP do servidor
 HOST_PORT       = 50000           # Definindo a porta
@@ -21,43 +22,40 @@ print('-'*100 + '\n')
 try:
     while True:
       try:
-            
-         # Recebendo o tamanho da mensagem
-         TamanhoMensagemBytes, tuplaCliente = sockServer.recvfrom(BUFFER_SIZE)
-         intTamanhoMensagens = int(TamanhoMensagemBytes.decode(CODE_PAGE))
-         print(f"Tamanho informado pelo cliente: {intTamanhoMensagens} bytes")
-
-         # Recebendo fragmentos da mensagem
-         Mensagem = ''
-         Fragmentos = 0
-        
-         while Fragmentos < intTamanhoMensagens:
-            MensagemBytes, tuplaCliente = sockServer.recvfrom(BUFFER_SIZE)
-            strMensagem = MensagemBytes.decode(CODE_PAGE)
-            Mensagem += strMensagem
-            Fragmentos += len(strMensagem)
-         print(f'Mensagem completa: {Mensagem}')
          
+        NomeArquivoBytes, tuplaCliente = sockServer.recvfrom(BUFFER_SIZE)
+        NomeArquivo = NomeArquivoBytes.decode(CODE_PAGE).strip()
+        print(f'Cliente solicitou: {NomeArquivo}  de  {tuplaCliente}')
+
+        # verifica existência do arquivo
+        if not path.exists(NomeArquivo):
+            sockServer.sendto('ERRO'.encode(CODE_PAGE), tuplaCliente)
+            print('Arquivo não encontrado.')
+            continue
+
+        else:
+            sockServer.sendto('OK'.encode(CODE_PAGE), tuplaCliente)
+
+        # lê o arquivo inteiro
+        with open(NomeArquivo, "rb") as f:
+            Conteudo = f.read()
+        
+        # envia tamanho ao cliente
+        TamanhoArquivo = len(Conteudo)
+        sockServer.sendto(str(TamanhoArquivo).encode(CODE_PAGE), tuplaCliente)
+
+        i = 0
+        while i < TamanhoArquivo:
+            parte = Conteudo[i:i+BUFFER_SIZE]
+            sockServer.sendto(parte, tuplaCliente)
+            i += BUFFER_SIZE
+        print('Arquivo enviado com sucesso!')
+
       except socket.timeout:
          continue
         
-      else:
-         try:
-            # Obtendo o nome (HOST) do cliente
-            strNomeHost = socket.gethostbyaddr(tuplaCliente[0])[0]
-            strNomeHost = strNomeHost.split('.')[0].upper()
-         except socket.herror:
-            strNomeHost = tuplaCliente[0]
-
-         print(f'{tuplaCliente} -> {strNomeHost}: {Mensagem}')
-
-         # Enviando a mensagem de volta para o cliente
-         i = 0
-         while i < intTamanhoMensagens:
-            parte = Mensagem[i:i+BUFFER_SIZE]
-            sockServer.sendto(str(parte).encode(CODE_PAGE), tuplaCliente)
-            i += BUFFER_SIZE
-      
+        # Enviando a mensagem de volta para o cliente
+        
 except KeyboardInterrupt:
     print('\nAVISO: Foi Pressionado CTRL+C...\nSaindo do Servidor...\n')
 
