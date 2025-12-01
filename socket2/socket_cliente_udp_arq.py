@@ -1,6 +1,6 @@
 import socket
 
-HOST_IP_SERVER = '192.168.0.5'
+HOST_IP_SERVER = '192.168.0.133'
 HOST_PORT      = 50000
 CODE_PAGE      = 'utf-8'
 BUFFER_SIZE    = 4096
@@ -11,6 +11,8 @@ sockClient = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 print("\n\nPara sair digite SAIR...\n\n")
 
 while True:
+
+    # Digitar o nome do arquivo
     NomeArquivo = input("Digite o nome do arquivo: ")
 
     if NomeArquivo.lower().strip() == "sair":
@@ -34,10 +36,9 @@ while True:
     TamanhoArquivo = int(TamanhoBytes.decode(CODE_PAGE))
     print(f"Tamanho total do arquivo: {TamanhoArquivo} bytes")
 
-    # Recebendo o arquivo em partes
+    # Recebendo o arquivo fragmentado
     conteudo_arquivo = b''
     recebido = 0
-
     while recebido < TamanhoArquivo:
         parte, TUPLA_SERVIDOR = sockClient.recvfrom(BUFFER_SIZE)
         conteudo_arquivo += parte
@@ -48,7 +49,6 @@ while True:
     # Salvando o arquivo
     with open("Recebido_" + NomeArquivo, "wb") as f:
         f.write(conteudo_arquivo)
-
     print(f"Arquivo salvo como: Recebido_{NomeArquivo}")
 
 sockClient.close()
